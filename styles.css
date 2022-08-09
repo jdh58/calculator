@@ -67,6 +67,10 @@ html {
     background-color: orange;
 }
 
+#equals {
+    background-color: orange;
+}
+
 .operator:hover {
     background-color: rgb(219, 143, 1); 
 }
