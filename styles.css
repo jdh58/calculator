@@ -4,6 +4,10 @@ html {
     box-sizing: border-box;
 }
 
+body {
+    background-color:rgb(145, 161, 181);
+}
+
 #container {
     width: 80%;
     height: 100vh;
@@ -23,7 +27,7 @@ html {
     border-width: 5px;
     border-style: solid;
     border-radius: 10px;
-    box-shadow: 3px 3px 12px 0px rgb(98, 98, 98);
+    box-shadow: 3px 3px 12px 0px rgba(0, 0, 0, 0.417);
 }
 
 #screen {
