@@ -1,15 +1,8 @@
-/*function add(nums) {
-    let sumAll = 0;
-    for (let i = 0; i < nums.length; i++) {
-        sumAll =+ nums[i];
-    }
-    return sumAll;
-}*/
-
 add = (a, b) => parseFloat(a) + parseFloat(b);
 sub = (a, b) => a - b;
 mult = (a, b) => a * b;
 div = (a, b) => a / b;
+pow = (a, b) => Math.pow(a, b);
 
 function operate(operator, a, b) {
     console.log('dsa');
@@ -17,6 +10,7 @@ function operate(operator, a, b) {
     if (operator == '-') { return sub(a, b); }
     if (operator == '*') { return mult(a, b); }
     if (operator == '/') { return div(a, b); }
+    if (operator == '^') { return pow(a, b); }
 }
 
 const numButtons = document.querySelectorAll('.num');
@@ -56,26 +50,39 @@ function opPressed(e) {
     operator = getId(e);
 }
 
+/* Store the second number that will be operated with the first */
 function secondPressed(e) {
+    /* Concatenate each number pressed to the 'second' variable until
+    an operator is pressed */
     second += getId(e);
+    // Display the numbers being entered
     screenText.textContent = second;
 }
 
 function equalsPressed() {
+    /* Display the appropirate calculation between the first and
+    second numbers, using the most recently pressed operator */
     screenText.textContent = operate(operator, first, second);
+
+    /* To prepare for the next calulation, set first equal to the current
+    answer, and reset second and operator to be empty */
     first = screenText.textContent;
     second = '';
     operator = '';
-    if (screenText.textContent === '' || screenText.textContent === 'NaN') {
+
+    /* This prevents the user from entering invalid inputs and crashing
+    the calculator */
+    if (screenText.textContent === '' || screenText.textContent === 'NaN'
+    || screenText.textContent === 'Infinity') {
         screenText.textContent = 'ERROR';
     }
 }
 
-/* Gets the id for the clicked button. Prevents code re-writing
-and improves readability */
+/* Gets the id for the clicked button. This function
+prevents re-writing code and improves readability */
 function getId(e) {
-    /* If the user clicked the nested element, set the text equal to
-    the button's id. If they pressed the button, do the same. */
+    /* If the user clicked the nested element, set the text equal to the
+    parent button's id. If they pressed the button itself, do the same. */
     if (e.target.nodeName == 'P') {
         return e.composedPath()[1].id;
     } else {
@@ -86,8 +93,11 @@ function getId(e) {
 /* Call when the clear button is pressed. Resets back to a default
 state */
 function clearPressed() {
+    // Go back to waiting for the first press if it wasn't
     numButtons.forEach(button => button.removeEventListener('click', secondPressed));
     numButtons.forEach(button => button.addEventListener('click', numPressed));
+
+    // Re-initialize values to the empty default ('')
     first = '';
     second = '';
     operator = '';
