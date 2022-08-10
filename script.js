@@ -34,15 +34,26 @@ equalsButton.addEventListener('click', equalsPressed);
 clearButton.addEventListener('click', clearPressed);
 
 function numPressed(e) {
+    /* The first number of our operation should be all the numbers
+    pressed up until the first operator is pressed */
     first += getId(e);
+    /* Display the user input on the display */
     screenText.textContent = first;
 }
 
 function opPressed(e) {
+    /* Once an operator is chosen, we want to record the second number in
+    our operation, not our first. So we swap out the event listeners */
     numButtons.forEach(button => button.removeEventListener('click', numPressed));
     numButtons.forEach(button => button.addEventListener('click', secondPressed));
+    /* If the user has already made one operation, pressing another should
+    act as an equals button for the previous operation before perfoming the next*/
+    if (second !== '') {
+        screenText.textContent = operate(operator, first, second);
+        first = screenText.textContent;
+        second = '';
+    }
     operator = getId(e);
-    console.log(first, operator);
 }
 
 function secondPressed(e) {
@@ -55,8 +66,13 @@ function equalsPressed() {
     first = screenText.textContent;
     second = '';
     operator = '';
+    if (screenText.textContent === '' || screenText.textContent === 'NaN') {
+        screenText.textContent = 'ERROR';
+    }
 }
 
+/* Gets the id for the clicked button. Prevents code re-writing
+and improves readability */
 function getId(e) {
     /* If the user clicked the nested element, set the text equal to
     the button's id. If they pressed the button, do the same. */
@@ -67,6 +83,8 @@ function getId(e) {
     }
 }
 
+/* Call when the clear button is pressed. Resets back to a default
+state */
 function clearPressed() {
     numButtons.forEach(button => button.removeEventListener('click', secondPressed));
     numButtons.forEach(button => button.addEventListener('click', numPressed));
