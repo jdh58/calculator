@@ -6,6 +6,8 @@ and meant to calculate two numbers at a time (you can string
 together operations to your heart's desire).
 
 Potential Features List:
--Keyboard Support
--Keep an operator highlighted until it's no longer in use
--Backspace button
+- Keyboard Support
+- Keep an operator highlighted until it's no longer in use
+- Backspace button
+- Better decimal support
+- Improved calculator layout
